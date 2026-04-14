@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<annotation>
+  <folder>train</folder>
+  <filename>IMG_2308_jpeg_jpg.rf.fa03adccb4ba923a629ab352b9a4051b.jpg</filename>
+  <path>/Users/dragonhero/DSfinalproject3/DS-4002_Group_Project3/DATA/processed_aquarium/train/IMG_2308_jpeg_jpg.rf.fa03adccb4ba923a629ab352b9a4051b.jpg</path>
+  <source>
+    <database>Aquarium Combined (Roboflow)</database>
+  </source>
+  <size>
+    <width>640</width>
+    <height>640</height>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>penguin</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>65</xmin>
+      <ymin>250</ymin>
+      <xmax>491</xmax>
+      <ymax>452</ymax>
+    </bndbox>
+  </object>
+</annotation>

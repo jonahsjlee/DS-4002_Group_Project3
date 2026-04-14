@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<annotation>
+  <folder>train</folder>
+  <filename>IMG_2520_jpeg_jpg.rf.9a314d1549f1b68acc7a2d03a8a7d04e.jpg</filename>
+  <path>/Users/dragonhero/DSfinalproject3/DS-4002_Group_Project3/DATA/processed_aquarium/train/IMG_2520_jpeg_jpg.rf.9a314d1549f1b68acc7a2d03a8a7d04e.jpg</path>
+  <source>
+    <database>Aquarium Combined (Roboflow)</database>
+  </source>
+  <size>
+    <width>640</width>
+    <height>640</height>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>puffin</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>343</xmin>
+      <ymin>196</ymin>
+      <xmax>525</xmax>
+      <ymax>307</ymax>
+    </bndbox>
+  </object>
+</annotation>

@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<annotation>
+  <folder>valid</folder>
+  <filename>IMG_8348_jpg.rf.688a066aa4db8f2b19be7e8fdc93d0d2.jpg</filename>
+  <path>/Users/dragonhero/DSfinalproject3/DS-4002_Group_Project3/DATA/processed_aquarium/valid/IMG_8348_jpg.rf.688a066aa4db8f2b19be7e8fdc93d0d2.jpg</path>
+  <source>
+    <database>Aquarium Combined (Roboflow)</database>
+  </source>
+  <size>
+    <width>640</width>
+    <height>640</height>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>fish</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>171</xmin>
+      <ymin>226</ymin>
+      <xmax>335</xmax>
+      <ymax>504</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>fish</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>333</xmin>
+      <ymin>439</ymin>
+      <xmax>416</xmax>
+      <ymax>621</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>fish</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>429</xmin>
+      <ymin>206</ymin>
+      <xmax>517</xmax>
+      <ymax>419</ymax>
+    </bndbox>
+  </object>
+</annotation>

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<annotation>
+  <folder>train</folder>
+  <filename>IMG_8590_MOV-4_jpg.rf.8136b2be6948fc2dedcb11454ae2a8a8.jpg</filename>
+  <path>/Users/dragonhero/DSfinalproject3/DS-4002_Group_Project3/DATA/processed_aquarium/train/IMG_8590_MOV-4_jpg.rf.8136b2be6948fc2dedcb11454ae2a8a8.jpg</path>
+  <source>
+    <database>Aquarium Combined (Roboflow)</database>
+  </source>
+  <size>
+    <width>640</width>
+    <height>640</height>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>jellyfish</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>290</xmin>
+      <ymin>142</ymin>
+      <xmax>462</xmax>
+      <ymax>270</ymax>
+    </bndbox>
+  </object>
+</annotation>

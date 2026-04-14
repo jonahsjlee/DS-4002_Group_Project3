@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<annotation>
+  <folder>valid</folder>
+  <filename>IMG_8572_MOV-1_jpg.rf.4b1f974cfd3d7916f8679ea99c250c6f.jpg</filename>
+  <path>/Users/dragonhero/DSfinalproject3/DS-4002_Group_Project3/DATA/processed_aquarium/valid/IMG_8572_MOV-1_jpg.rf.4b1f974cfd3d7916f8679ea99c250c6f.jpg</path>
+  <source>
+    <database>Aquarium Combined (Roboflow)</database>
+  </source>
+  <size>
+    <width>640</width>
+    <height>640</height>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>shark</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>11</xmin>
+      <ymin>217</ymin>
+      <xmax>553</xmax>
+      <ymax>325</ymax>
+    </bndbox>
+  </object>
+</annotation>

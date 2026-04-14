@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<annotation>
+  <folder>test</folder>
+  <filename>IMG_2651_jpeg_jpg.rf.376ea56ef18bc89f9de59e7e2261297e.jpg</filename>
+  <path>/Users/dragonhero/DSfinalproject3/DS-4002_Group_Project3/DATA/processed_aquarium/test/IMG_2651_jpeg_jpg.rf.376ea56ef18bc89f9de59e7e2261297e.jpg</path>
+  <source>
+    <database>Aquarium Combined (Roboflow)</database>
+  </source>
+  <size>
+    <width>640</width>
+    <height>640</height>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>stingray</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>192</xmin>
+      <ymin>350</ymin>
+      <xmax>492</xmax>
+      <ymax>432</ymax>
+    </bndbox>
+  </object>
+</annotation>

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<annotation>
+  <folder>test</folder>
+  <filename>IMG_8582_MOV-3_jpg.rf.87b0ba09681718769decbf40943f9c65.jpg</filename>
+  <path>/Users/dragonhero/DSfinalproject3/DS-4002_Group_Project3/DATA/processed_aquarium/test/IMG_8582_MOV-3_jpg.rf.87b0ba09681718769decbf40943f9c65.jpg</path>
+  <source>
+    <database>Aquarium Combined (Roboflow)</database>
+  </source>
+  <size>
+    <width>640</width>
+    <height>640</height>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>fish</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>183</xmin>
+      <ymin>436</ymin>
+      <xmax>287</xmax>
+      <ymax>502</ymax>
+    </bndbox>
+  </object>
+</annotation>

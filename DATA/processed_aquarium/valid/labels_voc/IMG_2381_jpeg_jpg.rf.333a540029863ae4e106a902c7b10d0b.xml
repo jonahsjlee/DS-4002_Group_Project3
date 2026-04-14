@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<annotation>
+  <folder>valid</folder>
+  <filename>IMG_2381_jpeg_jpg.rf.333a540029863ae4e106a902c7b10d0b.jpg</filename>
+  <path>/Users/dragonhero/DSfinalproject3/DS-4002_Group_Project3/DATA/processed_aquarium/valid/IMG_2381_jpeg_jpg.rf.333a540029863ae4e106a902c7b10d0b.jpg</path>
+  <source>
+    <database>Aquarium Combined (Roboflow)</database>
+  </source>
+  <size>
+    <width>640</width>
+    <height>640</height>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>starfish</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>167</xmin>
+      <ymin>267</ymin>
+      <xmax>470</xmax>
+      <ymax>490</ymax>
+    </bndbox>
+  </object>
+</annotation>

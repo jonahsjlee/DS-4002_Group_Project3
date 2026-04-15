@@ -4,8 +4,6 @@ Train=447 valid=127 test=63 | device=cpu
 [limit] max train batches per epoch: 40
 [limit] max val batches per epoch: 12
 epoch 1/1  train_loss=1.2577  val_loss=0.8507
-  saved /Users/dragonhero/DSfinalproject3/DS-4002_Group_Project3/OUTPUT/checkpoints_faster_rcnn/faster_rcnn_epoch01.pt
-saved /Users/dragonhero/DSfinalproject3/DS-4002_Group_Project3/OUTPUT/checkpoints_faster_rcnn/faster_rcnn_last.pt
 Evaluating on test set (mAP, recall, FPS, micro PRF @ IoU 0.5)...
 {
   "n_images_evaluated": 63,

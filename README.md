@@ -50,14 +50,15 @@ DS-4002_Group5_Project3/
 ├── SCRIPTS/
 │ ├── preprocess.py
 │ ├── train_faster_rcnn.py
-│ ├── 
+│ ├── train_ssd.py
 │
 ├── LICENSE
 └── README.md
 ```
 
 ### Folder Descriptions
-- **DATA**: Contains our original dataset with the 638 images split into train, valid, and test sets.
+- **DATA**:
+  - Contains our original dataset with the 638 images split into train, valid, and test sets.
   - Cleaned dataset after preprocessing.
   - Data appendix taking you through the dataset splits for how we will train, improve, and test our model. 
 - **SCRIPTS**: Contains python scripts for data preprocessing/cleaning, scripts running our object detection models, and scripts for model performance plots.

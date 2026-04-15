@@ -16,16 +16,11 @@ This project was developed and run using:
 ### Packages
 The following Python packages are required:
 
-- pandas
-- numpy
-- matplotlib.pyplot
-- lag_plot (from pandas.plotting)
-- kpss, adfuller, grangercausalitytests (from statsmodels.tsa.stattools_
-- VAR (from statsmodels.tsa.vector_ar.var_model)
+
 
 ## Section 2: Documentation Map
 ```text
-DS-4002_Group5_Project1/
+DS-4002_Group5_Project3/
 │
 ├── DATA/
 │ ├── preprocessed_aquarium
@@ -62,8 +57,16 @@ DS-4002_Group5_Project1/
   - Cleaned dataset after preprocessing.
   - Data appendix taking you through the dataset splits for how we will train, improve, and test our model. 
 - **SCRIPTS**: Contains python scripts for data preprocessing/cleaning, scripts running our object detection models, and scripts for model performance plots.
-- **OUTPUT**: Contains png files of the lag plots for avg_hourly_wage and USNHPI, results from the multivariate information criterion on selecting the order p for the VAR model, and the granger causation matrices for VAR models with order p=2 and p=14. Contains PDFs of the lag plots and stationarity tests for avg_hourly_wage_differences, USNHPI_differences, avg_hourly_wage_log_differences, and USNHPI_log_differences. 
+- **OUTPUT**: 
 - **LICENSE**: MIT license was selected based on recommendation from the DS 4002 Ml3 Rubric.
 - **README.md**: Instructions, documentation, and respository overview.
 
+## Section 3: Instructions for Reproduction
 
+## References: 
+
+[1] Fritz. (n.d.). Object detection guide – Everything you need to know. Object detection guide – Everything you need to know 
+[2] K. Sarma et al., “A comparative study on Faster R-CNN, YOLO and SSD,” AIP Conference Proceedings, vol. 2971, 060044, 2024. Available: https://pubs.aip.org/aip/acp/article/2971/1/060044/3296342/A-comparative-study-on-faster-R-CNN-YOLO-and-SSD
+[3] P. Tsirtsakis, G. Zacharis, G. S. Maraslidis, and G. F. Fragulis, “Deep learning for object recognition: A comprehensive review of models and algorithms,” International Journal of Cognitive Computing in Engineering, vol. 6, pp. 298–312, 2025.
+[4] S. Ren, K. He, R. Girshick, and J. Sun, “Faster R-CNN: Towards real-time object detection with region proposal networks,” IEEE Transactions on Pattern Analysis and Machine Intelligence, 2017. 
+[5] W. Liu et al., “SSD: Single Shot MultiBox Detector,” arXiv preprint arXiv:1905.016014, 2019. 

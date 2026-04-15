@@ -15,8 +15,12 @@ This project was developed and run using:
 
 ### Packages
 The following Python packages are required:
-- 
-
+- torch
+- torchvision
+- torchmetrics
+- Pillow
+- opencv-python
+- pycocotools
 
 ## Section 2: Documentation Map
 ```text

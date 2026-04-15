@@ -1,1 +1,14 @@
+# Using Object Detection to Classifly Marine Animals
+- DS 4002 Group 5, Project 3
+- Group Leader: Jonah Lee
+- Group Members: Jonathan Sutkus, Siwen Liao, Jonah Lee
+- Apr 15, 2026
+
+## Repository Contents
+The goal of this project is to deploy three separate object detection models (YOLOv4, Faster R-CNN, and SSD) with the aim of determining which model can 
+most accurately classify different marine animals through underwater images collected from the Henry Doorly Zoo in Omaha and the National Aquarium in 
+Baltimore. The DS-4002_Group5_Project3 repository contains the DATA folder (includes the original image data, the preprocessed dataset, and our data appendix),
+the SCRIPTS folder (includes code for preprocessing/cleaning the dataset and the scripts for each of the three different object detection models), 
+the OUTPUTS folder (contains results of accuracy from the models as well as plots looking into the classification performance of each model), and 
+the LICENSE.md and README.md files.
 

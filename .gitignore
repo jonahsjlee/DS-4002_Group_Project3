@@ -1,0 +1,12 @@
+# Checkpoints exceed GitHub's 100 MB per-file limit — keep locally or use Git LFS / releases
+OUTPUT/**/*.pt
+*.pt
+
+__pycache__/
+*.py[cod]
+.Python
+.venv/
+venv/
+.env
+
+.DS_Store

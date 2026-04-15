@@ -150,7 +150,9 @@ def _to_zero_indexed_labels(labels: torch.Tensor) -> torch.Tensor:
 
 
 @torch.no_grad()
-def mean_forward_loss(model, data_loader, device) -> float:
+def mean_forward_loss(
+    model, data_loader, device, max_batches: Optional[int] = None
+) -> float:
     model.train()
     total = 0.0
     n = 0
@@ -160,6 +162,8 @@ def mean_forward_loss(model, data_loader, device) -> float:
         loss_dict = model(images, targets)
         total += float(sum(loss_dict.values()))
         n += 1
+        if max_batches is not None and n >= max_batches:
+            break
     return total / max(n, 1)
 
 
@@ -169,6 +173,7 @@ def train_one_epoch(
     data_loader,
     device,
     max_norm: float,
+    max_batches: Optional[int] = None,
 ) -> float:
     model.train()
     running = 0.0
@@ -188,6 +193,8 @@ def train_one_epoch(
 
         running += float(losses.detach())
         n += 1
+        if max_batches is not None and n >= max_batches:
+            break
     return running / max(n, 1)
 
 
@@ -404,6 +411,18 @@ def main() -> None:
         default=None,
         help="Checkpoint from train_faster_rcnn (.pt). Used with --eval-only or to init weights.",
     )
+    parser.add_argument(
+        "--max-train-batches",
+        type=int,
+        default=None,
+        help="Stop each train epoch after this many batches (CPU smoke tests). Default: full epoch.",
+    )
+    parser.add_argument(
+        "--max-val-batches",
+        type=int,
+        default=None,
+        help="Cap validation loss batches each epoch. Default: full valid loader.",
+    )
     args = parser.parse_args()
 
     data_root = args.data_root.resolve()
@@ -476,14 +495,25 @@ def main() -> None:
         print(f"Classes ({len(class_names)}): {class_names}")
         print(f"num_classes (incl. background)={num_classes}")
         print(f"Train={len(train_ds)} valid={len(val_ds) if val_ds else 0} test={len(test_ds)} | device={device}")
+        if args.max_train_batches is not None:
+            print(f"[limit] max train batches per epoch: {args.max_train_batches}")
+        if args.max_val_batches is not None:
+            print(f"[limit] max val batches per epoch: {args.max_val_batches}")
 
         for epoch in range(1, args.epochs + 1):
             train_loss = train_one_epoch(
-                model, optimizer, train_loader, device, max_norm=args.max_norm
+                model,
+                optimizer,
+                train_loader,
+                device,
+                max_norm=args.max_norm,
+                max_batches=args.max_train_batches,
             )
             msg = f"epoch {epoch}/{args.epochs}  train_loss={train_loss:.4f}"
             if val_loader is not None:
-                val_loss = mean_forward_loss(model, val_loader, device)
+                val_loss = mean_forward_loss(
+                    model, val_loader, device, max_batches=args.max_val_batches
+                )
                 msg += f"  val_loss={val_loss:.4f}"
             print(msg)
 

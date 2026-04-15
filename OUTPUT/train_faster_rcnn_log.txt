@@ -1,0 +1,40 @@
+Classes (7): ['fish', 'jellyfish', 'penguin', 'puffin', 'shark', 'starfish', 'stingray']
+num_classes (incl. background)=8
+Train=447 valid=127 test=63 | device=cpu
+[limit] max train batches per epoch: 40
+[limit] max val batches per epoch: 12
+epoch 1/1  train_loss=1.2577  val_loss=0.8507
+  saved /Users/dragonhero/DSfinalproject3/DS-4002_Group_Project3/OUTPUT/checkpoints_faster_rcnn/faster_rcnn_epoch01.pt
+saved /Users/dragonhero/DSfinalproject3/DS-4002_Group_Project3/OUTPUT/checkpoints_faster_rcnn/faster_rcnn_last.pt
+Evaluating on test set (mAP, recall, FPS, micro PRF @ IoU 0.5)...
+{
+  "n_images_evaluated": 63,
+  "score_threshold": 0.5,
+  "fps_images_per_sec": 0.1245,
+  "latency_ms_per_image_mean": 8031.6303,
+  "trainable_parameters": 41107511,
+  "micro_precision_iou50": 0.357843,
+  "micro_recall_iou50": 0.12543,
+  "micro_f1_iou50": 0.185751,
+  "map": 0.012489022687077522,
+  "map_50": 0.026334617286920547,
+  "map_75": 0.011698683723807335,
+  "map_large": 0.0004243281437084079,
+  "map_medium": 0.014325503259897232,
+  "map_small": 0.02583465166389942,
+  "mar_1": 0.004934021737426519,
+  "mar_10": 0.02203098125755787,
+  "mar_100": 0.02306368388235569,
+  "model": "fasterrcnn_resnet50_fpn",
+  "split": "test",
+  "class_names_0indexed": [
+    "fish",
+    "jellyfish",
+    "penguin",
+    "puffin",
+    "shark",
+    "starfish",
+    "stingray"
+  ]
+}
+Wrote full metrics (including per-class torchmetrics) to /Users/dragonhero/DSfinalproject3/DS-4002_Group_Project3/OUTPUT/metrics_faster_rcnn_test.json

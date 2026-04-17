@@ -1,4 +1,4 @@
-# Using Object Detection to Classifly Marine Animals
+# Using Object Detection to Classify Marine Animals
 - DS 4002 Group 5, Project 3
 - Group Leader: Jonah Lee
 - Group Members: Jonathan Sutkus, Siwen Liao, Jonah Lee

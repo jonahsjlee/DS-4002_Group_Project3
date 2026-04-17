@@ -1,0 +1,18 @@
+Downloading: "https://download.pytorch.org/models/vgg16-397923af.pth" to C:\Users\Ryzen7_PC/.cache\torch\hub\checkpoints\vgg16-397923af.pth
+Classes (7): ['fish', 'jellyfish', 'penguin', 'puffin', 'shark', 'starfish', 'stingray']
+num_classes (incl. background)=8
+Train=447 valid=127 test=63 | device=cpu
+epoch 1/8  train_loss=15.1174  val_loss=10.3874
+  saved C:\Users\Ryzen7_PC\OneDrive\Documents\DS-4002_Group_Project3\OUTPUT\checkpoints_ssd\ssd_epoch01.pt
+epoch 2/8  train_loss=8.4717  val_loss=7.4056
+  saved C:\Users\Ryzen7_PC\OneDrive\Documents\DS-4002_Group_Project3\OUTPUT\checkpoints_ssd\ssd_epoch02.pt
+epoch 3/8  train_loss=7.0938  val_loss=7.2786
+  saved C:\Users\Ryzen7_PC\OneDrive\Documents\DS-4002_Group_Project3\OUTPUT\checkpoints_ssd\ssd_epoch03.pt
+epoch 4/8  train_loss=6.7530  val_loss=6.7858
+  saved C:\Users\Ryzen7_PC\OneDrive\Documents\DS-4002_Group_Project3\OUTPUT\checkpoints_ssd\ssd_epoch04.pt
+epoch 5/8  train_loss=6.4345  val_loss=6.5520
+  saved C:\Users\Ryzen7_PC\OneDrive\Documents\DS-4002_Group_Project3\OUTPUT\checkpoints_ssd\ssd_epoch05.pt
+epoch 6/8  train_loss=6.0334  val_loss=6.3931
+  saved C:\Users\Ryzen7_PC\OneDrive\Documents\DS-4002_Group_Project3\OUTPUT\checkpoints_ssd\ssd_epoch06.pt
+epoch 7/8  train_loss=5.7242  val_loss=6.4203
+  saved C:\Users\Ryzen7_PC\OneDrive\Documents\DS-4002_Group_Project3\OUTPUT\checkpoints_ssd\ssd_epoch07.pt

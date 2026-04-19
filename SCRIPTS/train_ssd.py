@@ -1,21 +1,8 @@
 #!/usr/bin/env python3
 # pyright: reportMissingImports=false
-"""
-Fine-tune SSD300 (VGG16 backbone) on preprocessed Aquarium VOC data and
-report metrics suitable for comparing to other detectors:
-
-  - mAP (COCO-style IoU 0.50:0.95), mAP@0.50, mAP@0.75
-  - Mean average recall (MAR / AR) at max detections (COCO-style)
-  - Global precision / recall / F1 at IoU 0.50 (micro over all matched boxes)
-  - Inference throughput (images/sec) and mean latency (ms/image)
-  - Trainable parameter count
-
-Requires: torch, torchvision, torchmetrics, pillow
-
-Example:
-  python3 SCRIPTS/train_ssd.py --data-root DATA/processed_aquarium --epochs 5
-  python3 SCRIPTS/train_ssd.py --eval-only --resume OUTPUT/checkpoints_ssd/ssd_last.pt
-"""
+# Train or evaluate SSD300 (VGG16) on VOC-style aquarium data.
+# Same style of metrics as Faster R-CNN script. Needs torch, torchvision, torchmetrics, Pillow.
+# Example: python3 SCRIPTS/train_ssd.py --data-root DATA/processed_aquarium --epochs 5
 
 from __future__ import annotations
 
@@ -42,6 +29,7 @@ except ImportError as e:  # pragma: no cover
     ) from e
 
 
+# Read class names from train/_classes.txt (one name per line).
 def load_class_names(data_root: Path) -> List[str]:
     p = data_root / "train" / "_classes.txt"
     if not p.exists():
@@ -49,6 +37,7 @@ def load_class_names(data_root: Path) -> List[str]:
     return [ln.strip() for ln in p.read_text(encoding="utf-8").splitlines() if ln.strip()]
 
 
+# Parse one Pascal VOC XML into filename, box tensor, and label tensor (1-based labels).
 def parse_voc_annotation(
     xml_path: Path, class_to_idx: Dict[str, int]
 ) -> Tuple[str, torch.Tensor, torch.Tensor]:
@@ -86,9 +75,8 @@ def parse_voc_annotation(
     return filename, torch.tensor(boxes, dtype=torch.float32), torch.tensor(labels, dtype=torch.int64)
 
 
+# PyTorch dataset: images in split_root, one VOC XML per image under labels_voc/.
 class AquariumVocDataset(Dataset):
-    """One processed split: images in split_root, VOC XML in split_root/labels_voc."""
-
     def __init__(self, split_root: Path, class_names: List[str]):
         self.split_root = Path(split_root)
         self.voc_dir = self.split_root / "labels_voc"
@@ -110,9 +98,11 @@ class AquariumVocDataset(Dataset):
         if not self._items:
             raise RuntimeError(f"No usable images with boxes under {self.split_root}")
 
+    # Number of usable (image, boxes) pairs in this split.
     def __len__(self) -> int:
         return len(self._items)
 
+    # Load one image as a tensor and return the detection target dict for the model.
     def __getitem__(self, idx: int) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
         img_path, boxes, labels = self._items[idx]
         image = Image.open(img_path).convert("RGB")
@@ -129,24 +119,28 @@ class AquariumVocDataset(Dataset):
         return image_t, target
 
 
+# Batch images and targets as lists (required for detection models).
 def collate_fn(batch: List[Tuple[torch.Tensor, Dict[str, torch.Tensor]]]):
     return tuple(zip(*batch))
 
 
+# SSD300: pretrained VGG backbone, fresh detection head for our class count.
 def build_model(num_classes: int) -> torch.nn.Module:
     # Keep pretrained backbone features while allowing custom class counts.
     return ssd300_vgg16(weights=None, weights_backbone="DEFAULT", num_classes=num_classes)
 
 
+# Move every tensor in each target dict to GPU or CPU.
 def _move_targets(targets: List[Dict[str, torch.Tensor]], device: torch.device):
     return [{k: v.to(device) for k, v in t.items()} for t in targets]
 
 
+# Map labels 1..K (model) to 0..K-1 (torchmetrics).
 def _to_zero_indexed_labels(labels: torch.Tensor) -> torch.Tensor:
-    """SSD uses 1..K; torchmetrics detection expects 0..K-1."""
     return (labels - 1).to(dtype=torch.int64)
 
 
+# Average total detection loss over batches (model stays in train mode).
 @torch.no_grad()
 def mean_forward_loss(
     model, data_loader, device, max_batches: Optional[int] = None
@@ -165,6 +159,7 @@ def mean_forward_loss(
     return total / max(n, 1)
 
 
+# One training epoch: forward, backward, optional grad clip, optimizer step.
 def train_one_epoch(
     model,
     optimizer,
@@ -196,6 +191,7 @@ def train_one_epoch(
     return running / max(n, 1)
 
 
+# Filter predictions by score and align label ids for torchmetrics.
 def _preds_targets_for_metric(
     raw_preds: List[Dict[str, torch.Tensor]],
     targets: List[Dict[str, torch.Tensor]],
@@ -222,6 +218,7 @@ def _preds_targets_for_metric(
     return preds_out, targets_out
 
 
+# Turn nested tensors into plain Python floats and lists for JSON.
 def _tensor_to_python(obj: Any) -> Any:
     if isinstance(obj, torch.Tensor):
         if obj.numel() == 1:
@@ -234,12 +231,12 @@ def _tensor_to_python(obj: Any) -> Any:
     return obj
 
 
+# Micro precision, recall, F1 at IoU 0.5 by greedy score-sorted matching to GT.
 @torch.no_grad()
 def micro_precision_recall_f1_iou50(
     preds: List[Dict[str, torch.Tensor]],
     targets: List[Dict[str, torch.Tensor]],
 ) -> Tuple[float, float, float]:
-    """Greedy match each prediction to best unmatched GT (same class, IoU>=0.5)."""
     total_tp = 0
     total_fp = 0
     total_fn = 0
@@ -286,6 +283,7 @@ def micro_precision_recall_f1_iou50(
     return prec, rec, f1
 
 
+# Full test pass: timed inference, torchmetrics mAP/MAR, micro PRF, parameter count.
 @torch.no_grad()
 def evaluate_detection_metrics(
     model: torch.nn.Module,
@@ -366,6 +364,7 @@ def evaluate_detection_metrics(
     return out
 
 
+# CLI: load data, train or resume, evaluate test set, save metrics JSON.
 def main() -> None:
     parser = argparse.ArgumentParser(description="Train / eval SSD300 with detection metrics.")
     parser.add_argument(

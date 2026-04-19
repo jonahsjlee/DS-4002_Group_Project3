@@ -1,26 +1,8 @@
 #!/usr/bin/env python3
-"""
-Preprocess the Roboflow Aquarium Combined export (YOLOv4 PyTorch layout with
-`_annotations.txt`) for training YOLOv4, Faster R-CNN, and SSD.
-
-Expected input layout (Roboflow):
-    dataset/
-      train|valid|test/
-        *.jpg
-        _annotations.txt   # lines: filename x1,y1,x2,y2,class_id ...
-        _classes.txt       # one class name per line (id = line index)
-
-Output (per split):
-    <output_dir>/<split>/
-      <image files>              # resized images (same filenames as input)
-      _annotations.txt           # Roboflow-style xyxy after resize (for YOLOv4 repos)
-      _classes.txt
-      labels_yolo/<stem>.txt     # YOLO: class cx cy w h (normalized)
-      labels_voc/<stem>.xml      # Pascal VOC for Faster R-CNN / SSD pipelines
-
-Augmentation (optional, default: train split only): horizontal flip and
-random brightness to mimic underwater lighting variability.
-"""
+# Preprocess the Roboflow Aquarium export (_annotations.txt) for YOLOv4, Faster R-CNN, and SSD.
+# Input: train|valid|test with images, _annotations.txt, _classes.txt.
+# Output per split: resized images, _annotations.txt, labels_yolo/*.txt, labels_voc/*.xml.
+# Train split can get flip + brightness augmentation.
 
 from __future__ import annotations
 
@@ -40,6 +22,7 @@ LABELS_YOLO = "labels_yolo"
 LABELS_VOC = "labels_voc"
 
 
+# One bounding box in pixels plus Roboflow class id.
 @dataclass
 class Box:
     x1: int
@@ -49,6 +32,7 @@ class Box:
     class_id: int
 
 
+# Split one Roboflow line into image filename and list of boxes.
 def parse_annotation_line(line: str) -> Tuple[str, List[Box]]:
     parts = line.strip().split()
     if not parts:
@@ -62,6 +46,7 @@ def parse_annotation_line(line: str) -> Tuple[str, List[Box]]:
     return filename, boxes
 
 
+# Build one Roboflow-style line for the output _annotations.txt.
 def format_annotation_line(filename: str, boxes: Iterable[Box]) -> str:
     box_tokens = [f"{b.x1},{b.y1},{b.x2},{b.y2},{b.class_id}" for b in boxes]
     if not box_tokens:
@@ -69,11 +54,13 @@ def format_annotation_line(filename: str, boxes: Iterable[Box]) -> str:
     return f"{filename} {' '.join(box_tokens)}"
 
 
+# Read class names from _classes.txt (line order = class id).
 def load_class_names(classes_path: Path) -> List[str]:
     lines = [ln.strip() for ln in classes_path.read_text(encoding="utf-8").splitlines()]
     return [ln for ln in lines if ln]
 
 
+# Flip image left-right and update box coordinates.
 def horizontal_flip_image_and_boxes(img: Any, boxes: List[Box]) -> Tuple[Any, List[Box]]:
     h, w = img.shape[:2]
     flipped = cv2.flip(img, 1)
@@ -85,11 +72,13 @@ def horizontal_flip_image_and_boxes(img: Any, boxes: List[Box]) -> Tuple[Any, Li
     return flipped, new_boxes
 
 
+# Random multiplicative brightness (underwater lighting jitter).
 def random_brightness(img, low: float, high: float, rng: random.Random):
     factor = rng.uniform(low, high)
     return cv2.convertScaleAbs(img, alpha=factor, beta=0)
 
 
+# Denoise, CLAHE contrast, optional resize; return image and x/y scale vs original.
 def preprocess_image(
     img: Any,
     width: int,
@@ -118,6 +107,7 @@ def preprocess_image(
     return img, sx, sy
 
 
+# Scale boxes after resize; clip to image and drop invalid boxes.
 def scale_boxes(boxes: Iterable[Box], sx: float, sy: float, max_w: int, max_h: int) -> List[Box]:
     scaled: List[Box] = []
     for b in boxes:
@@ -131,6 +121,7 @@ def scale_boxes(boxes: Iterable[Box], sx: float, sy: float, max_w: int, max_h: i
     return scaled
 
 
+# YOLO label text: class id + box center and size (normalized 0–1).
 def boxes_to_yolo_txt(boxes: Iterable[Box], img_w: int, img_h: int) -> str:
     lines: List[str] = []
     iw, ih = float(img_w), float(img_h)
@@ -145,11 +136,13 @@ def boxes_to_yolo_txt(boxes: Iterable[Box], img_w: int, img_h: int) -> str:
     return "\n".join(lines) + ("\n" if lines else "")
 
 
+# Helper: add a child XML element with text (VOC writer).
 def _sub_el(parent: ET.Element, name: str, text: str) -> None:
     el = ET.SubElement(parent, name)
     el.text = text
 
 
+# Write one Pascal VOC XML for an image and its objects.
 def write_voc_xml(
     path: Path,
     *,
@@ -198,11 +191,13 @@ def write_voc_xml(
     tree.write(path, encoding="utf-8", xml_declaration=True)
 
 
+# Blur proxy: higher Laplacian variance usually means sharper.
 def blur_score(img: Any) -> float:
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     return float(cv2.Laplacian(gray, cv2.CV_64F).var())
 
 
+# Process one split folder into output images + YOLO + VOC + updated annotations.
 def process_split(
     split_dir: Path,
     out_split_dir: Path,
@@ -316,6 +311,7 @@ def process_split(
     return processed, dropped
 
 
+# CLI: paths, resize, denoise, blur filter, augmentation knobs.
 def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Preprocess Roboflow object-detection export: resize, optional "
@@ -381,6 +377,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     return parser
 
 
+# Entry point: preprocess train/valid/test and print counts.
 def main() -> None:
     args = build_arg_parser().parse_args()
     input_dir: Path = args.input_dir

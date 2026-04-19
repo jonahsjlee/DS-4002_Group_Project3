@@ -59,7 +59,7 @@ DS-4002_Group5_Project3/
 ├── OUTPUT/
 │ ├── metrics_faster_rcnn_test.json
 │ ├── metrics_ssd_test.json
-│ ├── 
+│ ├── metrics_yolov4.json
 │ ├── train_faster_rcnn_log.txt
 │ ├── train_ssd_resume_eval.log
 │ ├── train_ssd_run.err
@@ -85,17 +85,19 @@ DS-4002_Group5_Project3/
   - Cleaned dataset after preprocessing.
   - Data appendix taking you through the dataset splits for how we will train, improve, and test our model. 
 - **SCRIPTS**: Contains python scripts for data preprocessing/cleaning, scripts running our object detection models, and scripts for model performance plots.
-- **OUTPUT**: 
+- **OUTPUT**: Contains JSON, txt, log, and err files for the evaluation metrics of each model and any additional logs when running recorded when running the models. 
 - **LICENSE**: MIT license was selected based on recommendation from the DS 4002 Ml3 Rubric.
 - **README.md**: Instructions, documentation, and respository overview.
 
 ## Section 3: Instructions for Reproduction
 
 - **Step 1**: Clone the repository. Cloning creates a complete local copy of the repository, including all files and branches. Make sure that you can see the DATA, OUTPUT, and SCRIPTS folders. Confirm that the preprocessed and processed folders exist in the DATA folder and contain the train, valid, and test images.
-- **Step 2**:
-- **Step 3**:
-- **Step 4**:
-- **Step 5**: Verify your outputs match those in the OUTPUT folder.
+- **Step 2**: Run the preprocess.py script in the SCRIPTS folder. This will process the Roboflow Aquarium Combined export (YOLOv4 PyTorch layout with `_annotations.txt`) for training YOLOv4, Faster R-CNN, and SSD. You can also directly access the preprocessed data from this step in the processed_aquarium folder in the DATA folder. 
+- **Step 3**: Run the train_faster_rcnn.py script in the SCRIPTS folder. Confirm that the resulting metrics correspond with those in the metrics_faster_rcnn_test.json file in the OUTPUT folder. 
+- **Step 4**: Run the train_ssd.py script in the SCRIPTS folder. Confirm that the resulting metrics correspond with those in the metrics_ssd_test.json file in the OUTPUT folder. 
+- **Step 5**: Run the train_yolov4.py script in the SCRIPTS folder with the T4 GPU Hardware Accelerator in Colab. Then, run the yolov4_metrics.py script with the CPU Hardware Accelerator in Colab. Confirm that the resulting metrics correspond with those in the metrics_yolov4.json file in the OUTPUT folder. 
+  - Some notes for Step 5:
+    - The train_yolov4.py script may require more resources than the free version of Colab offers. The        yolov4_metrics.py script is ran on CPU to limit the amount of GPU resources used. 
 
 ## References: 
 

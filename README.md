@@ -2,7 +2,7 @@
 - DS 4002 Group 5, Project 3
 - Group Leader: Jonah Lee
 - Group Members: Jonathan Sutkus, Siwen Liao, Jonah Lee
-- Apr 15, 2026
+- Apr 19, 2026
 
 ## Repository Contents
 The goal of this project is to deploy three separate object detection models (YOLOv4, Faster R-CNN, and SSD) with the aim of determining which model can most accurately classify different marine animals through underwater images collected from the Henry Doorly Zoo in Omaha and the National Aquarium in Baltimore. The DS-4002_Group5_Project3 repository contains the DATA folder (includes the original image data, the preprocessed dataset, and our data appendix), the SCRIPTS folder (includes code for preprocessing/cleaning the dataset and the scripts for each of the three different object detection models), the OUTPUTS folder (), and the LICENSE.md and README.md files.
@@ -15,12 +15,31 @@ This project was developed and run using:
 
 ### Packages
 The following Python packages are required:
+- annotations from __future__
+- argparse
+- hashlib
+- random
+- xml.etree.ElementTree
+- dataclass from dataclasses
+- Path from pathlib
+- Any, Iterable, List, Sequence, Tuple from typing
 - torch
-- torchvision
-- torchmetrics
-- Pillow
-- opencv-python
-- pycocotools
+- Image from PIL
+- DataLoader, Dataset from torch.utils.data
+- fasterrcnn_resnet50_fpn from torchvision.models.detection
+- FastRCNNPredictor from torchvision.models.detection.faster_rcnn
+- box_iou from torchvision.ops
+- functional from torchvision.transforms
+- ssd300_vgg16 from torchvision.models.detection
+- os
+- shutil
+- json
+- re
+- subprocess
+- sys
+- time
+- gdown
+- MeanAveragePrecision from torchmetrics.detection.mean_ap
 
 ## Section 2: Documentation Map
 ```text
@@ -36,24 +55,28 @@ DS-4002_Group5_Project3/
 | | ├── train
 | | ├── valid
 │ ├── P3_Data_Appendix.pdf
-│ ├── 
-│ ├── 
 │
 ├── OUTPUT/
 │ ├── metrics_faster_rcnn_test.json
+│ ├── metrics_ssd_test.json
+│ ├── 
 │ ├── train_faster_rcnn_log.txt
-│ ├── 
-│ ├── 
-│ ├── 
-│ ├── 
+│ ├── train_ssd_resume_eval.log
+│ ├── train_ssd_run.err
+│ ├── train_ssd_run.log
 │
 ├── SCRIPTS/
 │ ├── preprocess.py
 │ ├── train_faster_rcnn.py
 │ ├── train_ssd.py
+│ ├── train_yolov4.py
+│ ├── yolov4_metrics.py
 │
+├── .gitignore
+├── DS-4002_Group_Project3.code-workspace
 ├── LICENSE
-└── README.md
+├── README.md
+└──requirements-detection.txt
 ```
 
 ### Folder Descriptions
